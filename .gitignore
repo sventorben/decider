@@ -1,0 +1,58 @@
+# Binaries (root level only)
+/decider
+/decider.exe
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+
+# Build output
+/dist/
+/bin/
+
+# Downloaded tools (keep version file, ignore binaries)
+/tools/decider/
+
+# Test artifacts
+*.test
+*.out
+coverage.out
+coverage.html
+
+# Go workspace
+go.work
+go.work.sum
+
+# Dependency directories
+/vendor/
+
+# Claude Code local settings (not shared with team)
+.claude/settings.local.json
+.claude/*.local.*
+.claude.json
+
+# IDE and editor
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db
+
+# Environment and secrets
+.env
+.env.*
+*.pem
+*.key
+
+# Debug
+__debug_bin*
+debug
+
+# OS generated
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
