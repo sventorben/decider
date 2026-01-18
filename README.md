@@ -427,7 +427,3 @@ See [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines. Run `make check` before o
 ## AI Assistance
 
 Parts of this project were developed with AI-assisted tooling. Contributors and users should review code and documentation critically, as with any project. All contributions—whether human or AI-assisted—must meet the same project standards: tests must pass, ADRs must be followed, and human review is expected.
-
-## License
-
-[MIT](LICENSE)
