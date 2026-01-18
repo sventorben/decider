@@ -2,6 +2,49 @@
 
 This document defines the stable CLI contract, file formats, and behavior guarantees for DECIDER.
 
+## Supported Output Formats
+
+DECIDER supports multiple output formats for machine-readable data:
+
+| Format | Extension | Description | Default |
+|--------|-----------|-------------|---------|
+| TOON   | `.toon`   | Token-Oriented Object Notation, compact encoding of JSON data model | Yes (structured) |
+| JSON   | `.json`   | Standard JSON format | No |
+| YAML   | `.yaml`   | YAML format (index files only) | Yes (index) |
+| text   | -         | Human-readable text output | Yes (CLI) |
+
+### Format Selection
+
+- **CLI output**: Default is `text` for human readability. Use `--format=toon` or `--format=json` for machine-readable output.
+- **Index files**: Default is YAML (`index.yaml`) for human editability and git diff friendliness.
+- **Structured output**: When `--format=toon` or `--format=json` is specified, output is deterministic (sorted keys).
+
+### TOON Format
+
+TOON (Token-Oriented Object Notation) encodes the same data model as JSON:
+- Objects: `{key:value key2:value2}`
+- Arrays: `[item1 item2 item3]`
+- Strings: bare words for identifiers (`hello`), quoted for spaces/special chars (`"hello world"`)
+- Numbers: `42`, `3.14`
+- Booleans: `true`, `false`
+- Null: `null`
+
+Example TOON output:
+```
+{adr_id:ADR-0001 status:adopted title:"Use PostgreSQL"}
+```
+
+Equivalent JSON:
+```json
+{"adr_id": "ADR-0001", "status": "adopted", "title": "Use PostgreSQL"}
+```
+
+### Interoperability
+
+To convert between formats:
+- TOON ↔ JSON: Data model is identical; use any TOON/JSON parser
+- Use `--format=json` flag when JSON is required for downstream tools
+
 ## ADR Format
 
 ### File Location
@@ -189,7 +232,7 @@ decider new [OPTIONS] TITLE
 - `--paths CSV` - Comma-separated scope paths (globs)
 - `--status STATUS` - Initial status (default: `proposed`)
 - `--no-index` - Skip updating index
-- `--format FORMAT` - Output format: `text` | `json` (default: `text`)
+- `--format FORMAT` - Output format: `text` | `toon` | `json` (default: `text`)
 
 **Behavior:**
 - Determines next ADR number from existing files
@@ -212,7 +255,7 @@ decider index [OPTIONS]
 **Flags:**
 - `--dir PATH` - ADR directory (default: `docs/adr`)
 - `--check` - Verify index is up-to-date (don't modify)
-- `--format FORMAT` - Output format: `text` | `json` | `yaml` (default: `text`)
+- `--format FORMAT` - Output format: `text` | `toon` | `json` | `yaml` (default: `text`)
 
 **Behavior:**
 - Without `--check`: Regenerates index.yaml
@@ -236,7 +279,7 @@ decider list [OPTIONS]
 - `--status STATUS` - Filter by status
 - `--tag TAG` - Filter by tag (repeatable)
 - `--path PATH` - Filter by scope path match
-- `--format FORMAT` - Output format: `text` | `json` (default: `text`)
+- `--format FORMAT` - Output format: `text` | `toon` | `json` (default: `text`)
 
 **Behavior:**
 - Uses index.yaml if available, else scans ADR files
@@ -259,7 +302,7 @@ decider show [OPTIONS] IDENTIFIER
 
 **Flags:**
 - `--dir PATH` - ADR directory (default: `docs/adr`)
-- `--format FORMAT` - Output format: `text` | `json` (default: `text`)
+- `--format FORMAT` - Output format: `text` | `toon` | `json` (default: `text`)
 
 **Exit codes:**
 - 0: Success
@@ -276,7 +319,7 @@ decider check adr [OPTIONS]
 **Flags:**
 - `--dir PATH` - ADR directory (default: `docs/adr`)
 - `--strict` - Treat warnings as errors (exit code 2 on rationale pattern violations)
-- `--format FORMAT` - Output format: `text` | `json` (default: `text`)
+- `--format FORMAT` - Output format: `text` | `toon` | `json` (default: `text`)
 
 **Validates:**
 - Required frontmatter keys present
@@ -315,7 +358,7 @@ decider check diff --base REF [OPTIONS]
 **Flags:**
 - `--base REF` - Base git ref for diff (required)
 - `--dir PATH` - ADR directory (default: `docs/adr`)
-- `--format FORMAT` - Output format: `text` | `json` (default: `text`)
+- `--format FORMAT` - Output format: `text` | `toon` | `json` (default: `text`)
 
 **Behavior:**
 - Gets changed files via `git diff --name-only BASE`
@@ -339,7 +382,7 @@ decider explain --base REF [OPTIONS]
 **Flags:**
 - `--base REF` - Base git ref for diff (required)
 - `--dir PATH` - ADR directory (default: `docs/adr`)
-- `--format FORMAT` - Output format: `text` | `json` (default: `text`)
+- `--format FORMAT` - Output format: `text` | `toon` | `json` (default: `text`)
 
 **Behavior:**
 - Like `check diff` but with narrative explanation

@@ -103,8 +103,8 @@ func RunCheckADR(cfg *CheckADRConfig) (*CheckADRResult, error) {
 	}
 
 	// Output
-	if cfg.Format == FormatJSON {
-		_ = cfg.Output.PrintJSON(result)
+	if cfg.Format == FormatTOON || cfg.Format == FormatJSON {
+		_ = cfg.Output.PrintStructured(result)
 	} else {
 		hasErrors := len(result.Errors) > 0
 		hasWarnings := len(result.Warnings) > 0
@@ -232,8 +232,8 @@ func RunCheckDiff(cfg *CheckDiffConfig) (*CheckDiffResult, error) {
 	}
 
 	// Output
-	if cfg.Format == FormatJSON {
-		_ = cfg.Output.PrintJSON(result)
+	if cfg.Format == FormatTOON || cfg.Format == FormatJSON {
+		_ = cfg.Output.PrintStructured(result)
 	} else {
 		cfg.Output.Println("Changed files: %d", len(changedFiles))
 		cfg.Output.Println("Applicable ADRs: %d", len(result.ApplicableADRs))

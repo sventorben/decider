@@ -82,7 +82,7 @@ func printVersion() {
 func runInit(args []string) {
 	fs := flag.NewFlagSet("init", flag.ExitOnError)
 	dir := fs.String("dir", defaultADRDir, "ADR directory path")
-	format := fs.String("format", "text", "Output format (text|json)")
+	format := fs.String("format", "text", "Output format (text|toon|json)")
 	if err := fs.Parse(args); err != nil {
 		fmt.Fprintf(os.Stderr, "error: %v\n", err)
 		os.Exit(1)
@@ -112,7 +112,7 @@ func runNew(args []string) {
 	paths := fs.String("paths", "", "Comma-separated scope paths (globs)")
 	status := fs.String("status", "proposed", "Initial status")
 	noIndex := fs.Bool("no-index", false, "Skip updating index")
-	format := fs.String("format", "text", "Output format (text|json)")
+	format := fs.String("format", "text", "Output format (text|toon|json)")
 
 	fs.Usage = func() {
 		fmt.Println("Usage: decider new [options] <title>")
@@ -177,7 +177,7 @@ func runIndex(args []string) {
 	fs := flag.NewFlagSet("index", flag.ExitOnError)
 	dir := fs.String("dir", defaultADRDir, "ADR directory path")
 	check := fs.Bool("check", false, "Check if index is up-to-date (don't modify)")
-	format := fs.String("format", "text", "Output format (text|json|yaml)")
+	format := fs.String("format", "text", "Output format (text|toon|json|yaml)")
 	if err := fs.Parse(args); err != nil {
 		fmt.Fprintf(os.Stderr, "error: %v\n", err)
 		os.Exit(1)
@@ -212,7 +212,7 @@ func runList(args []string) {
 	status := fs.String("status", "", "Filter by status")
 	tag := fs.String("tag", "", "Filter by tag")
 	path := fs.String("path", "", "Filter by scope path match")
-	format := fs.String("format", "text", "Output format (text|json)")
+	format := fs.String("format", "text", "Output format (text|toon|json)")
 	if err := fs.Parse(args); err != nil {
 		fmt.Fprintf(os.Stderr, "error: %v\n", err)
 		os.Exit(1)
@@ -247,7 +247,7 @@ func runList(args []string) {
 func runShow(args []string) {
 	fs := flag.NewFlagSet("show", flag.ExitOnError)
 	dir := fs.String("dir", defaultADRDir, "ADR directory path")
-	format := fs.String("format", "text", "Output format (text|json)")
+	format := fs.String("format", "text", "Output format (text|toon|json)")
 
 	fs.Usage = func() {
 		fmt.Println("Usage: decider show [options] <ADR-ID|number|filename>")
@@ -315,7 +315,7 @@ func runCheckADR(args []string) {
 	fs := flag.NewFlagSet("check adr", flag.ExitOnError)
 	dir := fs.String("dir", defaultADRDir, "ADR directory path")
 	strict := fs.Bool("strict", false, "Treat warnings as errors (fail on missing rationale pattern)")
-	format := fs.String("format", "text", "Output format (text|json)")
+	format := fs.String("format", "text", "Output format (text|toon|json)")
 	if err := fs.Parse(args); err != nil {
 		fmt.Fprintf(os.Stderr, "error: %v\n", err)
 		os.Exit(1)
@@ -349,7 +349,7 @@ func runCheckDiff(args []string) {
 	fs := flag.NewFlagSet("check diff", flag.ExitOnError)
 	dir := fs.String("dir", defaultADRDir, "ADR directory path")
 	base := fs.String("base", "", "Base ref for git diff (required)")
-	format := fs.String("format", "text", "Output format (text|json)")
+	format := fs.String("format", "text", "Output format (text|toon|json)")
 
 	fs.Usage = func() {
 		fmt.Println("Usage: decider check diff --base <ref> [options]")
@@ -394,7 +394,7 @@ func runExplain(args []string) {
 	fs := flag.NewFlagSet("explain", flag.ExitOnError)
 	dir := fs.String("dir", defaultADRDir, "ADR directory path")
 	base := fs.String("base", "", "Base ref for git diff (required)")
-	format := fs.String("format", "text", "Output format (text|json)")
+	format := fs.String("format", "text", "Output format (text|toon|json)")
 
 	fs.Usage = func() {
 		fmt.Println("Usage: decider explain --base <ref> [options]")

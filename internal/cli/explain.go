@@ -91,8 +91,8 @@ func RunExplain(cfg *ExplainConfig) (*ExplainResult, error) {
 	}
 
 	// Output
-	if cfg.Format == FormatJSON {
-		_ = cfg.Output.PrintJSON(result)
+	if cfg.Format == FormatTOON || cfg.Format == FormatJSON {
+		_ = cfg.Output.PrintStructured(result)
 	} else {
 		cfg.Output.Println("# ADR Applicability Analysis")
 		cfg.Output.Println("")

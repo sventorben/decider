@@ -41,8 +41,8 @@ func RunIndex(cfg *IndexConfig) (*IndexResult, error) {
 			File:      indexPath,
 		}
 
-		if cfg.Format == FormatJSON {
-			_ = cfg.Output.PrintJSON(result)
+		if cfg.Format == FormatTOON || cfg.Format == FormatJSON {
+			_ = cfg.Output.PrintStructured(result)
 		} else {
 			if upToDate {
 				cfg.Output.Success("Index is up-to-date: %s", indexPath)
@@ -72,6 +72,8 @@ func RunIndex(cfg *IndexConfig) (*IndexResult, error) {
 	}
 
 	switch cfg.Format {
+	case FormatTOON:
+		_ = cfg.Output.PrintTOON(result)
 	case FormatJSON:
 		_ = cfg.Output.PrintJSON(result)
 	case FormatYAML:

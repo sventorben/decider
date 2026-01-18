@@ -62,8 +62,8 @@ func RunShow(cfg *ShowConfig) (*ShowResult, error) {
 	}
 
 	// Output
-	if cfg.Format == FormatJSON {
-		_ = cfg.Output.PrintJSON(result)
+	if cfg.Format == FormatTOON || cfg.Format == FormatJSON {
+		_ = cfg.Output.PrintStructured(result)
 	} else {
 		cfg.Output.Println("# %s: %s", result.ADRID, result.Title)
 		cfg.Output.Println("")

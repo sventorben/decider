@@ -214,7 +214,11 @@ ADR-0001: Use PostgreSQL for persistence
 AI coding agents can query DECIDER before making changes:
 
 ```bash
-# Agent workflow: get constraints for current changes
+# Agent workflow: get constraints for current changes (TOON format, default)
+$ decider check diff --base main --format toon
+{applicable_adrs:[{adr_id:ADR-0001 constraints:["Use repository pattern" "Use prepared statements"]}]}
+
+# Use JSON format for traditional tooling
 $ decider check diff --base main --format json | jq '.applicable_adrs[].constraints'
 [
   "All database access must go through the repository pattern",
@@ -334,10 +338,19 @@ The steward assists but doesn't make architectural decisions:
 
 Common flags:
 - `--dir PATH`: ADR directory (default: `docs/adr`)
-- `--format text|json`: Output format
+- `--format text|toon|json`: Output format (TOON is default for structured output)
 - `--status STATUS`: Filter by status
 - `--tag TAG`: Filter by tag
 - `--strict`: Treat warnings as errors (for `check adr`)
+
+### Output Formats
+
+DECIDER supports multiple output formats:
+- **text**: Human-readable (default for CLI)
+- **toon**: Token-Oriented Object Notation, compact and LLM-friendly (default for structured output)
+- **json**: Standard JSON for traditional tooling integration
+
+Use `--format=json` when integrating with tools that require JSON.
 
 See [SPEC.md](SPEC.md) for complete CLI documentation.
 

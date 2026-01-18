@@ -112,8 +112,8 @@ func RunNew(cfg *NewConfig) (*NewResult, error) {
 	}
 
 	// Output result
-	if cfg.Format == FormatJSON {
-		_ = cfg.Output.PrintJSON(result)
+	if cfg.Format == FormatTOON || cfg.Format == FormatJSON {
+		_ = cfg.Output.PrintStructured(result)
 	} else {
 		cfg.Output.Success("Created %s", filePath)
 		cfg.Output.Println("  ADR ID: %s", adrID)

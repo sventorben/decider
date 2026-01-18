@@ -91,8 +91,8 @@ func RunList(cfg *ListConfig) (*ListResult, error) {
 	}
 
 	// Output
-	if cfg.Format == FormatJSON {
-		_ = cfg.Output.PrintJSON(result)
+	if cfg.Format == FormatTOON || cfg.Format == FormatJSON {
+		_ = cfg.Output.PrintStructured(result)
 	} else {
 		if len(entries) == 0 {
 			cfg.Output.Println("No ADRs found.")
